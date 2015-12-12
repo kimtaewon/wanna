@@ -1,0 +1,46 @@
+package Main;
+import java.awt.*;
+import java.util.Scanner;
+
+public class Main{
+    public static int N = 0;
+    public static Point[] a = new Point[4];
+
+    public static void add(Point p) {
+        if (N >= a.length - 1){
+            Point[] temp = new Point[2 * N + 1];
+            for (int i = 0; i <= N; i++) temp[i] = a[i];
+            a = temp;
+        }
+        a[N++] = p;
+        a[N] = a[0];
+    }
+    public static double area() {
+        double sum = 0.0;
+        for (int i = 0; i < N; i++) {
+            sum = sum + ((float)a[i].x * (float)a[i + 1].y) - ((float)a[i].y * (float)a[i + 1].x);
+        }
+        return 0.5 * sum;
+    }
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+
+        int num = input.nextInt();
+        int[] x = new int[num];
+        int[] y = new int[num];
+        for(int i = 0; i < num; i++){
+            x[i] = input.nextInt();
+            y[i] = input.nextInt();
+            input.nextLine();
+        }
+
+        Polygon poly = new Polygon();
+        for(int i = 0; i < num; i++){
+            add(new Point(x[i], y[i]));
+        }
+
+        double area = Math.round(Math.abs(area()) * 100.0) / 100.0;
+        System.out.printf("The total area is %.2f", area);
+    }
+}
+
